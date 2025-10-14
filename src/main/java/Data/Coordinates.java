@@ -1,9 +1,14 @@
 package Data;
 
-public class Coordinates {
+import java.io.Serializable;
+
+public class Coordinates implements Serializable {
     private Float x; //Поле не может быть null
     private float y;
 
+    public Coordinates(){
+
+    }
     public Coordinates(Float x, Float y) {
         this.x = x;
         this.y = y;

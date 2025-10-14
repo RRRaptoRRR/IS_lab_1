@@ -9,6 +9,9 @@ public class Person {
     private Float height; //Поле может быть null, Значение поля должно быть больше 0
     private Country nationality; //Поле может быть null
 
+    public Person(){
+    }
+
     public Person(String name, Color eyeColor, Color hairColor, Location location, java.time.LocalDate birthday, Float height, Country nationality) {
         this.name = name;
         this.eyeColor = eyeColor;

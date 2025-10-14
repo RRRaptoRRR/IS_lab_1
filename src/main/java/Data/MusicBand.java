@@ -1,6 +1,8 @@
 package Data;
 
-public class MusicBand {
+import java.io.Serializable;
+
+public class MusicBand implements Serializable {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -13,6 +15,10 @@ public class MusicBand {
     private long albumsCount; //Значение поля должно быть больше 0
     private java.time.LocalDate establishmentDate; //Поле не может быть null
     private Person frontMan; //Поле не может быть null
+
+    public MusicBand(){
+
+    }
 
     public MusicBand(Long id, String name, Coordinates coordinates, java.time.LocalDate creationDate, MusicGenre musicGenre, int numberOfParticipants, long singlesCount, String description, Album bestAlbum, long albumsCount, java.time.LocalDate establishmentDate, Person frontMan ) {
         this.id = id;
