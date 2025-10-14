@@ -1,18 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="Beans.ResultsBean" %>
+<%@ page import="Data.MusicBand" %>
 
 <html>
 <body>
-<h2>Hello World!</h2>
-<h1>S 1 raza?</h1>
+<h2>Music Bands!</h2>
+<% ResultsBean resultsBean = (ResultsBean) request.getSession().getAttribute("table");
+    ArrayList<MusicBand> raws = resultsBean.getResult();%>
 
-<%--<p>Name: ${name}</p>
-
-<p>Request Name: <%= request.getAttribute("name") %></p>
-<p>Session Name: <%= session.getAttribute("name") %></p>
-
-<p>Name: ${testBean.name}</p>
-<p>Age: ${testBean.age}</p>--%>
 <div id = "list">
     <table id="result_table" border="1" cellpadding="0" cellspacing="0" width="100%" class="results">
         <thead>
@@ -53,6 +50,43 @@
         </tr>
         </thead>
         <tbody>
+        <%
+            if(raws!=null){
+                if(!raws.isEmpty()){
+                    for (MusicBand raw:raws){
+
+
+        %>
+        <tr>
+            <td><%= raw.getId()%></td>
+            <td><%= raw.getName()%></td>
+            <td><%= raw.getCoordinates().getX()%></td>
+            <td><%= raw.getCoordinates().getY()%></td>
+            <td><%= raw.getCreationDate()%></td>
+            <td><%= raw.getGenre()%></td>
+            <td><%= raw.getNumberOfParticipants()%></td>
+            <td><%= raw.getSinglesCount()%></td>
+            <td><%= raw.getDescription()%></td>
+            <td><%= raw.getBestAlbum().getName()%></td>
+            <td><%= raw.getBestAlbum().getSales()%></td>
+            <td><%= raw.getAlbumsCount()%></td>
+            <td><%= raw.getEstablishmentDate()%></td>
+            <td><%= raw.getFrontMan().getName()%></td>
+            <td><%= raw.getFrontMan().getEyeColor()%></td>
+            <td><%= raw.getFrontMan().getHairColor()%></td>
+            <td><%= raw.getFrontMan().getLocation().getX()%></td>
+            <td><%= raw.getFrontMan().getLocation().getY()%></td>
+            <td><%= raw.getFrontMan().getLocation().getName()%></td>
+            <td><%= raw.getFrontMan().getBirthday()%></td>
+            <td><%= raw.getFrontMan().getHeight()%></td>
+            <td><%= raw.getFrontMan().getNationality()%></td>v
+        </tr>
+        <%
+                    }
+                }
+            }
+        %>
+
         </tbody>
     </table>
 
