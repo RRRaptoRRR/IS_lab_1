@@ -5,12 +5,85 @@
 <%@ page import="Data.MusicBand" %>
 
 <html>
+<head>
+    <script type="text/javascript">
+        function filterTableById() {
+            // Получаем значение из поля ввода
+            var inputId = document.getElementById('input_id').value;
+            var table = document.getElementById('result_table');
+            var rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            var found = false;
+
+            // Сначала показываем все строки
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].style.display = '';
+            }
+
+            // Если поле пустое, показываем все строки
+            if (inputId === '') {
+                document.getElementById('noResultMessage').style.display = 'none';
+                return;
+            }
+
+            // Ищем строку с нужным ID
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName('td');
+                if (cells.length > 0) {
+                    var rowId = cells[0].textContent || cells[0].innerText;
+
+                    if (rowId === inputId) {
+                        // Нашли нужную строку - показываем только её
+                        rows[i].style.display = '';
+                        found = true;
+                    } else {
+                        // Скрываем другие строки
+                        rows[i].style.display = 'none';
+                    }
+                }
+            }
+
+            // Показываем сообщение, если ничего не найдено
+            var messageElement = document.getElementById('noResultMessage');
+            if (found) {
+                messageElement.style.display = 'none';
+            } else {
+                messageElement.style.display = 'block';
+                messageElement.innerHTML = 'Группа с ID ' + inputId + ' не найдена';
+            }
+        }
+
+        // Функция для сброса фильтра и показа всех данных
+        function showAll() {
+            var table = document.getElementById('result_table');
+            var rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                rows[i].style.display = '';
+            }
+
+            document.getElementById('input_id').value = '';
+            document.getElementById('noResultMessage').style.display = 'none';
+        }
+    </script>
+</head>
 <body>
 <h2>Music Bands!</h2>
 <% ResultsBean resultsBean = (ResultsBean) request.getSession().getAttribute("table");
     ArrayList<MusicBand> raws = resultsBean.getResult();%>
 
-<div id = "list">
+<div>
+    <form onsubmit="event.preventDefault(); filterTableById();">
+        <p>Введите ID группы, чтобы найти её</p>
+        <p><input type="text" id="input_id" placeholder="Только цифры"></p>
+        <button type="submit">Найти по ID</button>
+        <button type="button" onclick="showAll()">Показать все</button>
+    </form>
+</div>
+
+<!-- Сообщение, если группа не найдена -->
+<div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
+
+<div id="list">
     <table id="result_table" border="1" cellpadding="0" cellspacing="0" width="100%" class="results">
         <thead>
         <tr>
@@ -54,8 +127,6 @@
             if(raws!=null){
                 if(!raws.isEmpty()){
                     for (MusicBand raw:raws){
-
-
         %>
         <tr>
             <td><%= raw.getId()%></td>
@@ -79,17 +150,15 @@
             <td><%= raw.getFrontMan().getLocation().getName()%></td>
             <td><%= raw.getFrontMan().getBirthday()%></td>
             <td><%= raw.getFrontMan().getHeight()%></td>
-            <td><%= raw.getFrontMan().getNationality()%></td>v
+            <td><%= raw.getFrontMan().getNationality()%></td>
         </tr>
         <%
                     }
                 }
             }
         %>
-
         </tbody>
     </table>
-
 </div>
 </body>
 </html>
