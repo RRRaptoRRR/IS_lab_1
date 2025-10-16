@@ -10,6 +10,7 @@ public class Album implements Serializable {
     }
     public Album(String name, Double sales) {
         this.name = name;
+        this.sales = sales;
     }
     public String getName() {
         return name;
