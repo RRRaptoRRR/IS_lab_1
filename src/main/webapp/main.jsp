@@ -26,6 +26,12 @@
     </form>
 </div>
 
+<div>
+    <input type="text" id="input_name" placeholder="Введите часть имени группы">
+    <button onclick="filterTableByName()">Фильтровать по имени</button>
+    <button onclick="showAll()">Показать все</button>
+</div>
+
 <!-- Сообщение, если группа не найдена -->
 <div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
 
