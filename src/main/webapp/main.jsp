@@ -35,6 +35,12 @@
 <!-- Сообщение, если группа не найдена -->
 <div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
 
+<div>
+    <form action="createBand" method="get">
+        <button  type="submit" >Создать новую банду</button>
+    </form>
+</div>
+
 <div id="list">
     <table id="result_table" border="1" cellpadding="0" cellspacing="0" width="100%" class="results">
         <thead>
