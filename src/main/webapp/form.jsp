@@ -4,6 +4,8 @@
 <html>
 <head>
     <title>${band != null ? "Редактирование группы" : "Создание группы"}</title>
+    <meta charset="UTF-8">
+
 </head>
 
 <body>

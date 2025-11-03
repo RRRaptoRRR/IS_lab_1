@@ -11,6 +11,8 @@
     </script>
     <link rel="stylesheet" href="resources/css/styles.css">
 
+    <meta charset="UTF-8">
+
 </head>
 <body>
 <h2>Music Bands!</h2>
