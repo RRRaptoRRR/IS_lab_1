@@ -73,3 +73,7 @@ body {
     background: #d0d0ff;
     font-weight: bold;
 }
+#pagination button:disabled {
+    opacity: 0.4;
+    cursor: default;
+}

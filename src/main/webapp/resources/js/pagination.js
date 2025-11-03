@@ -20,17 +20,33 @@ function showPage(page) {
 }
 
 function updatePagination(totalPages) {
-    let container = document.getElementById("pagination");
+    const container = document.getElementById("pagination");
     container.innerHTML = "";
 
+    // <-
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "←";
+    prevBtn.disabled = (currentPage === 1);
+    prevBtn.onclick = () => showPage(currentPage - 1);
+    container.appendChild(prevBtn);
+
+    // Номера страниц
     for (let i = 1; i <= totalPages; i++) {
-        let btn = document.createElement("button");
+        const btn = document.createElement("button");
         btn.textContent = i;
         btn.classList.toggle("active", i === currentPage);
         btn.onclick = () => showPage(i);
         container.appendChild(btn);
     }
+
+    // ->
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "→";
+    nextBtn.disabled = (currentPage === totalPages);
+    nextBtn.onclick = () => showPage(currentPage + 1);
+    container.appendChild(nextBtn);
 }
+
 
 function afterFilterUpdate() {
     showPage(1);
