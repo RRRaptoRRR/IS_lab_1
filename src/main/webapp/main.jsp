@@ -58,6 +58,8 @@
             <th rowspan="3"> Дата Основания группы </th>
             <th colspan="10"> Руковадитель группы </th>
 
+            <th>Действия</th>
+
         </tr>
         <tr>
             <th rowspan="2"> X </th>
@@ -109,6 +111,20 @@
             <td><%= raw.getFrontMan().getBirthday()%></td>
             <td><%= raw.getFrontMan().getHeight()%></td>
             <td><%= raw.getFrontMan().getNationality()%></td>
+            <td>
+                <!-- Кнопка редактирования -->
+                <form action="editBand" method="get" style="display:inline">
+                    <input type="hidden" name="id" value="<%= raw.getId()%>">
+                    <button type="submit">Редактировать</button>
+                </form>
+
+                <!-- Кнопка удаления -->
+                <form action="deleteBand" method="post" style="display:inline">
+                    <input type="hidden" name="id" value="<%= raw.getId()%>">
+                    <button type="submit">Удалить</button>
+                </form>
+            </td>
+
         </tr>
         <%
                     }
