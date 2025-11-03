@@ -8,8 +8,10 @@
 <head>
     <script type="text/javascript" src="resources/js/filters.js">
 
+
     </script>
-    <link rel="stylesheet" href="resources/css/styles.css">
+    <script type="text/javascript" src="resources/js/pagination.js"></script>
+        <link rel="stylesheet" href="resources/css/styles.css">
 
     <meta charset="UTF-8">
 
@@ -30,12 +32,14 @@
     <p>Поиск по названию группы</p>
     <input type="text" id="searchName" placeholder="Поиск по названию" oninput="filterByName()" style="width: 200px;">
     <br><br>
+
     <p>Фильтр по дате основания(основаны позже этой даты)</p>
     <input type="date" id="searchDate" oninput="filterByDate()" style="width: 200px;">
-
     <p>Количество найденных групп: <span id="dateCount">0</span></p>
 
-    <br><br>
+    <p>Фильтр по возрасту фронтмена:</p>
+    <input type="number" id="searchAge" placeholder="Возраст" oninput="filterByAge()" style="width: 200px;">
+    <p>Количество найденных групп: <span id="ageCount">0</span></p>
 
 </div>
 
@@ -46,10 +50,6 @@
         <button  type="submit" >Создать новую банду</button>
     </form>
 </div>
-
-
-<!-- Сообщение, если группа не найдена -->
-<div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
 
 <div id="list">
     <table id="result_table" border="1" cellpadding="0" cellspacing="0" width="100%" class="results">
@@ -66,9 +66,9 @@
             <th colspan="2"> Лучший альбом </th>
             <th rowspan="3"> Количество альбомов</th>
             <th rowspan="3"> Дата Основания группы </th>
-            <th colspan="10"> Руковадитель группы </th>
+            <th colspan="9"> Руковадитель группы </th>
 
-            <th>Действия</th>
+            <th rowspan="3">Действия</th>
 
         </tr>
         <tr>
@@ -144,5 +144,8 @@
         </tbody>
     </table>
 </div>
+
+<div id="pagination" style="margin-top: 15px;"></div>
+
 </body>
 </html>

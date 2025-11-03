@@ -73,3 +73,52 @@ function filterByDate() {
     document.getElementById("searchId").value = "";
     document.getElementById("searchName").value = "";
 }
+
+function calculateAge(birthDate) {
+    let today = new Date();
+    let birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    let monthDiff = today.getMonth() - birth.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+        age--;
+    }
+    return age;
+}
+
+function filterByAge() {
+    let ageInput = document.getElementById("searchAge").value;
+    let rows = document.querySelectorAll("table tbody tr");
+    let count = 0;
+
+    // если поле пустое → показываем всё
+    if (!ageInput) {
+        rows.forEach(row => row.style.display = "");
+        document.getElementById("ageCount").textContent = rows.length;
+        return;
+    }
+
+    rows.forEach(row => {
+        let birthdayCell = row.querySelector("td:nth-child(20)");
+        if (!birthdayCell) return;
+
+        let birthdayText = birthdayCell.textContent.trim();
+        let age = calculateAge(birthdayText);
+        console.log(birthdayText);
+        console.log(age);
+
+
+        if (age <= ageInput) {
+            row.style.display = "";
+            count++;
+        } else {
+            row.style.display = "none";
+        }
+    });
+
+    document.getElementById("ageCount").textContent = count;
+
+    // сбрасываем остальные фильтры чтобы фильтр был независимым
+    document.getElementById("searchId").value = "";
+    document.getElementById("searchName").value = "";
+    document.getElementById("searchDate").value = "";
+}

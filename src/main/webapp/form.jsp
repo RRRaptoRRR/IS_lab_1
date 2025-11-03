@@ -99,6 +99,12 @@
     <button type="submit">${band != null ? "Сохранить изменения" : "Создать"}</button>
 
 </form>
-
+<button type="button" onclick="goBack()" style="margin-bottom: 10px;">Назад</button>
+<script>
+    function goBack() {
+        // Прерывает редактирование и возвращает на главное меню
+        window.location.href = "controller"; // <-- если твой ControllerServlet обслуживает /main
+    }
+</script>
 </body>
 </html>
