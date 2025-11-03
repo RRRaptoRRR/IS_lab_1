@@ -20,21 +20,27 @@
     ArrayList<MusicBand> raws = resultsBean.getResult();%>
 
 
-<div id = "filters">
+
+
+
+<div id = "filtert">
     <p>Поиск по ID</p>
     <input type="number" id="searchId" placeholder="Поиск по ID" oninput="filterById()" style="width: 200px;">
+
     <p>Поиск по Названию группы</p>
-
-    <input type="text" id="searchName" placeholder="Поиск по названию" oninput="filterByName()" style="width: 200px;>
+    <input type="text" id="searchName" placeholder="Поиск по названию" oninput="filterByName()" style="width: 200px;">
     <br><br>
-
 </div>
+
+
 
 <div>
     <form action="createBand" method="get">
-    <button  type="submit" >Создать новую банду</button>
+        <button  type="submit" >Создать новую банду</button>
     </form>
 </div>
+
+
 <!-- Сообщение, если группа не найдена -->
 <div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
 
