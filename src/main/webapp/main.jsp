@@ -19,29 +19,24 @@
 <% ResultsBean resultsBean = (ResultsBean) request.getSession().getAttribute("table");
     ArrayList<MusicBand> raws = resultsBean.getResult();%>
 
-<div>
-    <form onsubmit="event.preventDefault(); filterTableById();">
-        <p>Введите ID группы, чтобы найти её</p>
-        <p><input type="text" id="input_id" placeholder="Только цифры"></p>
-        <button type="submit">Найти по ID</button>
-        <button type="button" onclick="showAll()">Показать все</button>
-    </form>
-</div>
 
-<div>
-    <input type="text" id="input_name" placeholder="Введите часть имени группы">
-    <button onclick="filterTableByName()">Фильтровать по имени</button>
-    <button onclick="showAll()">Показать все</button>
-</div>
+<div id = "filters">
+    <p>Поиск по ID</p>
+    <input type="number" id="searchId" placeholder="Поиск по ID" oninput="filterById()" style="width: 200px;">
+    <p>Поиск по Названию группы</p>
 
-<!-- Сообщение, если группа не найдена -->
-<div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
+    <input type="text" id="searchName" placeholder="Поиск по названию" oninput="filterByName()" style="width: 200px;>
+    <br><br>
+
+</div>
 
 <div>
     <form action="createBand" method="get">
-        <button  type="submit" >Создать новую банду</button>
+    <button  type="submit" >Создать новую банду</button>
     </form>
 </div>
+<!-- Сообщение, если группа не найдена -->
+<div id="noResultMessage" style="display: none; color: red; font-weight: bold; margin: 10px 0;"></div>
 
 <div id="list">
     <table id="result_table" border="1" cellpadding="0" cellspacing="0" width="100%" class="results">
