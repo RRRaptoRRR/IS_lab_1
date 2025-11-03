@@ -27,9 +27,16 @@
     <p>Поиск по ID</p>
     <input type="number" id="searchId" placeholder="Поиск по ID" oninput="filterById()" style="width: 200px;">
 
-    <p>Поиск по Названию группы</p>
+    <p>Поиск по названию группы</p>
     <input type="text" id="searchName" placeholder="Поиск по названию" oninput="filterByName()" style="width: 200px;">
     <br><br>
+    <p>Фильтр по дате основания(основаны позже этой даты)</p>
+    <input type="date" id="searchDate" oninput="filterByDate()" style="width: 200px;">
+
+    <p>Количество найденных групп: <span id="dateCount">0</span></p>
+
+    <br><br>
+
 </div>
 
 
