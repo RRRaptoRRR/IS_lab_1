@@ -1,0 +1,75 @@
+/* Общий стиль страницы */
+body {
+    font-family: Arial, sans-serif;
+    margin: 25px;
+}
+
+/* Контейнер панелей фильтров */
+.filter-panel {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+/* Каждая колонка фильтров */
+.filter-block {
+    width: 48%;
+}
+
+/* Поля ввода */
+.input {
+    width: 200px;
+    padding: 4px;
+    margin-bottom: 10px;
+}
+
+/* Пагинация */
+#pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pagination button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+#pagination button:hover {
+    background-color: #e5e5e5;
+}
+
+#pagination button[style*="font-weight:bold"] {
+    background-color: #d0d0ff;
+}
+
+/*-----------*/
+    /* Скрытие строк фильтром */
+.filtered-out {
+    display: none !important;
+}
+
+/* Скрытие строк пагинацией */
+.hidden-page {
+    display: none !important;
+}
+
+/* Пагинация */
+#pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+#pagination button {
+    padding: 5px 12px;
+    margin: 2px;
+    border: 1px solid #444;
+    cursor: pointer;
+    background: white;
+}
+
+#pagination button.active {
+    background: #d0d0ff;
+    font-weight: bold;
+}

@@ -5,15 +5,14 @@
 <%@ page import="Data.MusicBand" %>
 
 <html>
-<head>
-    <script type="text/javascript" src="resources/js/filters.js">
+    <head>
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
+        <link rel="stylesheet" href="resources/css/main.css">
 
-    </script>
-    <script type="text/javascript" src="resources/js/pagination.js"></script>
         <link rel="stylesheet" href="resources/css/styles.css">
 
-    <meta charset="UTF-8">
+        <meta charset="UTF-8">
 
 </head>
 <body>
@@ -25,28 +24,37 @@
 
 
 
-<div id = "filtert">
-    <p>Поиск по ID</p>
-    <input type="number" id="searchId" placeholder="Поиск по ID" oninput="filterById()" style="width: 200px;">
+<div class="filter-panel">
 
-    <p>Поиск по названию группы</p>
-    <input type="text" id="searchName" placeholder="Поиск по названию" oninput="filterByName()" style="width: 200px;">
-    <br><br>
+    <!-- Блок поиска -->
+    <div class="filter-block">
+        <p><b>Поиск по ID</b></p>
+        <input id="searchId" oninput="clearOtherFilters('searchId'); filterById();">
 
-    <p>Фильтр по дате основания(основаны позже этой даты)</p>
-    <input type="date" id="searchDate" oninput="filterByDate()" style="width: 200px;">
-    <p>Количество найденных групп: <span id="dateCount">0</span></p>
+        <p><b>Поиск по названию группы</b></p>
+        <input id="searchName" oninput="clearOtherFilters('searchName'); filterByName();">
 
-    <p>Фильтр по возрасту фронтмена:</p>
-    <input type="number" id="searchAge" placeholder="Возраст" oninput="filterByAge()" style="width: 200px;">
-    <p>Количество найденных групп: <span id="ageCount">0</span></p>
+    </div>
+
+    <!-- Блок фильтров -->
+    <div class="filter-block" style="text-align:right;">
+        <p><b>Фильтр по дате основания</b></p>
+        <input id="searchDate" type = "date" oninput="clearOtherFilters('searchDate'); filterByDate();">
+        <p>Количество найденных групп: <span id="dateCount">0</span></p>
+
+        <p><b>Фильтр по возрасту фронтмена</b></p>
+        <input id="searchAge" oninput="clearOtherFilters('searchAge'); filterByAge();">
+        <p>Количество найденных групп: <span id="ageCount">0</span></p>
+    </div>
 
 </div>
 
 
 
+
+
 <div>
-    <form action="createBand" method="get">
+    <form action="createBand" method="get" style="text-align: center;">
         <button  type="submit" >Создать новую банду</button>
     </form>
 </div>
@@ -145,7 +153,8 @@
     </table>
 </div>
 
-<div id="pagination" style="margin-top: 15px;"></div>
-
+<div id="pagination" style="margin-top: 15px; text-align: center;"></div>
+<script type="text/javascript" src="resources/js/filters.js"></script>
+<script type="text/javascript" src="resources/js/pagination.js"></script>
 </body>
 </html>
