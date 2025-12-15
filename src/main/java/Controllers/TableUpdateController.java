@@ -15,13 +15,13 @@ public class TableUpdateController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // 1. Загружаем свежие данные из БД
-        ResultsBean bean = new ResultsBean();
-        ArrayList<MusicBand> bands = bean.getResult();
+        ResultsBean tempBean = new ResultsBean();
+        ArrayList<MusicBand> bands = tempBean.getResult();
 
-        // 2. Кладем их в атрибут, как обычно
-        request.setAttribute("table", bands);
+        // 2. Кладем СПИСОК в request
+        request.setAttribute("bandsList", bands);
 
-        // 3. Отдаем только фрагмент таблицы (без <html>, <head> и прочего мусора)
+        // 3. Отдаем только фрагмент
         request.getRequestDispatcher("/table-rows.jsp").forward(request, response);
     }
 }

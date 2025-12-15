@@ -6,8 +6,7 @@
 
 <!-- Здесь ТОЛЬКО строки таблицы -->
 
-<% ResultsBean resultsBean = (ResultsBean) request.getSession().getAttribute("table");
-    ArrayList<MusicBand> raws = resultsBean.getResult();%>
+<% ArrayList<MusicBand> raws = (ArrayList<MusicBand>) request.getAttribute("bandsList");%>
 
 <%
     if(raws!=null){

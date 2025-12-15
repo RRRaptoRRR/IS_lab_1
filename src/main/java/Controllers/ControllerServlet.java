@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 @WebServlet(name = "/controller", urlPatterns = "/controller")
 public class ControllerServlet extends HttpServlet {
@@ -21,21 +22,14 @@ public class ControllerServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        HttpSession session = request.getSession();
+        ResultsBean tempBean = new ResultsBean();
+        ArrayList<MusicBand> bands = tempBean.getResult();
 
-        ResultsBean resultsBean = (ResultsBean) session.getAttribute("table");
-        if (resultsBean == null) {
-            resultsBean = new ResultsBean();
-            /*MusicBand Nirvana = new MusicBand((long) 0, "nirvana", new Coordinates( (float) 0.2 , (float) 0.1), LocalDate.now(), MusicGenre.ROCK, 4, 10, "Yeeehh", new Album("Deluxe", 100000.00), 5, LocalDate.of(1987, 1, 1), new Person("Kobein", Color.GREEN, Color.YELLOW, new Location( (long) 1.1, 0.0, "Arizona"), LocalDate.of(1967, 2, 20), (float) 179, Country.USA));
-            MusicBand Linkin_Park = new MusicBand((long) 1, "Linkn Park", new Coordinates( (float) 0.2 , (float) 0.1), LocalDate.now(), MusicGenre.ROCK, 4, 11, "Yeaahh", new Album("Hibrid Theory", 1100000.00), 7, LocalDate.of(1996, 1, 1), new Person("Maike Shinodu", Color.BROWN, Color.BROWN, new Location( (long) 1.1, 0.0, "London"), LocalDate.of(1977, 2, 11), (float) 180, Country.INDIA));
-            MusicBand Artic_Monkeys = new MusicBand((long) 2, "Artic Monkeys", new Coordinates( (float) 0.2 , (float) 0.1), LocalDate.now(), MusicGenre.PROGRESSIVE_ROCK, 4, 11, "the holy Guitar", new Album("Favourite worst Nightmare", 10000.00), 7, LocalDate.of(2002, 6, 1), new Person("Alex Terner", Color.YELLOW, Color.YELLOW, new Location( (long) 1.1, 0.0, "Sheffild"), LocalDate.of(1986, 1, 6), (float) 178, Country.INDIA));
+        // 2. Кладем СПИСОК в request (для table-rows.jsp, который внутри main.jsp)
+        request.setAttribute("bandsList", bands);
 
-            //resultsBean.addMusicBandToResult(Nirvana);
-            //resultsBean.addMusicBandToResult(Linkin_Park);
-            //resultsBean.addMusicBandToResult(Artic_Monkeys);*/
-        }
-
-        session.setAttribute("table", resultsBean);
+        // 3. Открываем главную страницу
+        // main.jsp включит в себя table-rows.jsp, который найдет "bandsList" и отрисует его.
         getServletContext().getRequestDispatcher("/main.jsp").forward(request, response);
     }
 }

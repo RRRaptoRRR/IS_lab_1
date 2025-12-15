@@ -17,10 +17,6 @@
 </head>
 <body>
 <h2>Music Bands!</h2>
-<% ResultsBean resultsBean = (ResultsBean) request.getSession().getAttribute("table");
-    ArrayList<MusicBand> raws = resultsBean.getResult();%>
-
-
 
 
 
