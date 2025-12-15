@@ -105,8 +105,9 @@
         </tbody>
     </table>
 </div>
-<script type="text/javascript" src="resources/js/filters.js"></script>
 <script type="text/javascript" src="resources/js/pagination.js"></script>
+<script type="text/javascript" src="resources/js/filters.js"></script>
+
 <script type="text/javascript" src="resources/js/table.js"></script>
 <div id="pagination" style="margin-top: 15px; text-align: center;"></div>
 </body>

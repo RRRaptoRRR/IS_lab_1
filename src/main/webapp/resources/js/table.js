@@ -1,28 +1,29 @@
+/* === table.js === */
+
 function refreshTable() {
     $.ajax({
         url: 'table-update',
         type: 'GET',
         success: function(response) {
+            // 1. Вставляем новый HTML
             $('#musicTableBody').html(response);
 
-            // Вызываем нашу глобальную функцию
+            // 2. Восстанавливаем фильтры и пагинацию
+            // Функция reapplyAllFilters сама решит, какую страницу показать
             if (typeof window.reapplyAllFilters === "function") {
                 window.reapplyAllFilters();
-            } else if (typeof reapplyAllFilters === "function") {
-                reapplyAllFilters();
-            }
-            // Если функции нет, хотя бы пагинацию обновим
-            else if (typeof showPage === "function") {
-                showPage(currentPage);
+            } else {
+                // Если filters.js не загружен, просто показываем текущую страницу
+                if (typeof showPage === "function") {
+                    showPage(window.currentPage);
+                }
             }
         },
-
         error: function(error) {
-            console.log("Ошибка обновления: ", error);
+            console.log("Ошибка обновления таблицы: ", error);
         }
     });
 }
 
-
-// Запускаем обновление каждые 2000 мс (2 секунды)
+// Запускаем таймер (2 секунды)
 setInterval(refreshTable, 2000);

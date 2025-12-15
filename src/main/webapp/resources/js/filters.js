@@ -19,113 +19,130 @@ function calculateAge(birthDate) {
     return age;
 }
 
-/* --- Функции фильтрации --- */
+/**
+ * Обновляет интерфейс после изменения фильтров.
+ * keepPage = true: пытаемся остаться на текущей странице (для автообновления).
+ * keepPage = false: сбрасываем на 1 страницу (для нового поиска).
+ */
+function updateUI(keepPage) {
+    if (typeof showPage === "function") {
+        if (keepPage) {
+            // Оставляем текущую страницу (логика проверки границ уже есть внутри showPage)
+            showPage(window.currentPage);
+        } else {
+            // Новый фильтр - всегда первая страница
+            window.currentPage = 1;
+            showPage(1);
+        }
+    }
+}
 
-function filterById() {
+/* --- Функции фильтрации --- */
+/* Они ТОЛЬКО ставят класс filtered-out. Они НЕ меняют display: none. */
+
+function filterById(keepPage = false) {
     clearOtherFilters("searchId");
-    let value = document.getElementById("searchId").value.toLowerCase();
+    let val = document.getElementById("searchId")?.value.toLowerCase() || "";
+
     document.querySelectorAll("table tbody tr").forEach(row => {
         let cell = row.querySelector("td:nth-child(1)");
-        if(cell) {
-            let match = cell.textContent.toLowerCase().includes(value);
-            row.classList.toggle("filtered-out", value && !match);
-        }
+        let match = cell && cell.textContent.toLowerCase().includes(val);
+
+        if (val && !match) row.classList.add("filtered-out");
+        else row.classList.remove("filtered-out");
     });
-    // Важно: проверяем, существует ли функция перед вызовом
-    if (typeof afterFilterUpdate === "function") afterFilterUpdate();
+    updateUI(keepPage);
 }
 
-function filterByName() {
+function filterByName(keepPage = false) {
     clearOtherFilters("searchName");
-    let value = document.getElementById("searchName").value.toLowerCase();
+    let val = document.getElementById("searchName")?.value.toLowerCase() || "";
+
     document.querySelectorAll("table tbody tr").forEach(row => {
         let cell = row.querySelector("td:nth-child(2)");
-        if(cell) {
-            let match = cell.textContent.toLowerCase().includes(value);
-            row.classList.toggle("filtered-out", value && !match);
-        }
+        let match = cell && cell.textContent.toLowerCase().includes(val);
+
+        if (val && !match) row.classList.add("filtered-out");
+        else row.classList.remove("filtered-out");
     });
-    if (typeof afterFilterUpdate === "function") afterFilterUpdate();
+    updateUI(keepPage);
 }
 
-function filterByDate() {
+function filterByDate(keepPage = false) {
     clearOtherFilters("searchDate");
-    let value = document.getElementById("searchDate").value;
-    let inputDate = value ? new Date(value) : null;
+    let val = document.getElementById("searchDate")?.value;
+    let inputDate = val ? new Date(val) : null;
     let count = 0;
 
     document.querySelectorAll("table tbody tr").forEach(row => {
-        let cell = row.querySelector("td:nth-child(13)"); // Убедитесь, что индекс верный!
-        if(cell) {
+        let cell = row.querySelector("td:nth-child(13)"); // Проверьте индекс столбца!
+        let visible = true;
+
+        if (cell && inputDate) {
             let rowDate = new Date(cell.textContent.trim());
-            let visible = !inputDate || rowDate > inputDate;
-            row.classList.toggle("filtered-out", !visible);
-            if (visible) count++;
+            if (rowDate <= inputDate) visible = false;
+        }
+
+        if (!visible) row.classList.add("filtered-out");
+        else {
+            row.classList.remove("filtered-out");
+            count++;
         }
     });
 
-    let counter = document.getElementById("dateCount");
-    if(counter) counter.textContent = count;
+    if(document.getElementById("dateCount"))
+        document.getElementById("dateCount").textContent = val ? count : 0;
 
-    if (typeof afterFilterUpdate === "function") afterFilterUpdate();
+    updateUI(keepPage);
 }
 
-function filterByAge() {
+function filterByAge(keepPage = false) {
     clearOtherFilters("searchAge");
-    let value = document.getElementById("searchAge").value;
+    let val = document.getElementById("searchAge")?.value;
     let count = 0;
 
     document.querySelectorAll("table tbody tr").forEach(row => {
-        let cell = row.querySelector("td:nth-child(20)"); // Убедитесь, что индекс верный!
-        if(cell) {
-            let birthday = cell.textContent.trim();
-            let age = calculateAge(birthday);
-            let visible = !value || age <= value;
-            row.classList.toggle("filtered-out", !visible);
-            if (visible) count++;
+        let cell = row.querySelector("td:nth-child(20)"); // Проверьте индекс столбца!
+        let visible = true;
+
+        if (cell && val) {
+            let age = calculateAge(cell.textContent.trim());
+            if (age > val) visible = false;
+        }
+
+        if (!visible) row.classList.add("filtered-out");
+        else {
+            row.classList.remove("filtered-out");
+            count++;
         }
     });
 
-    let counter = document.getElementById("ageCount");
-    if(counter) counter.textContent = count;
+    if(document.getElementById("ageCount"))
+        document.getElementById("ageCount").textContent = val ? count : 0;
 
-    if (typeof afterFilterUpdate === "function") afterFilterUpdate();
+    updateUI(keepPage);
 }
 
 /* === ГЛАВНАЯ ФУНКЦИЯ ВОССТАНОВЛЕНИЯ === */
-/* Эту функцию вызывает table.js после AJAX */
 window.reapplyAllFilters = function() {
-    // Проверяем каждый инпут. Если есть значение - запускаем фильтр.
+    let foundActiveFilter = false;
 
-    let idInput = document.getElementById("searchId");
-    if (idInput && idInput.value) {
-        filterById();
-        return;
+    if (document.getElementById("searchId")?.value) {
+        filterById(true); // true = сохранить страницу
+        foundActiveFilter = true;
+    } else if (document.getElementById("searchName")?.value) {
+        filterByName(true);
+        foundActiveFilter = true;
+    } else if (document.getElementById("searchDate")?.value) {
+        filterByDate(true);
+        foundActiveFilter = true;
+    } else if (document.getElementById("searchAge")?.value) {
+        filterByAge(true);
+        foundActiveFilter = true;
     }
 
-    let nameInput = document.getElementById("searchName");
-    if (nameInput && nameInput.value) {
-        filterByName();
-        return;
-    }
-
-    let dateInput = document.getElementById("searchDate");
-    if (dateInput && dateInput.value) {
-        filterByDate();
-        return;
-    }
-
-    let ageInput = document.getElementById("searchAge");
-    if (ageInput && ageInput.value) {
-        filterByAge();
-        return;
-    }
-
-    // Если ни один фильтр не активен, просто обновляем пагинацию
-    // Переменная currentPage должна быть глобальной в pagination.js
-    if (typeof showPage === "function" && typeof currentPage !== "undefined") {
-        showPage(currentPage);
-    } else if (typeof showPage === "function") {
-        showPage(1);
+    // Если фильтров нет, просто обновляем текущую страницу для новых данных
+    if (!foundActiveFilter && typeof showPage === "function") {
+        showPage(window.currentPage);
     }
 };
