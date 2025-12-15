@@ -1,0 +1,109 @@
+/* === resources/css/main.css (добавка) === */
+
+/* Стили для формы form.jsp */
+.form-container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+.styled-form fieldset {
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background: #fafafa;
+}
+
+.styled-form legend {
+    font-weight: bold;
+    color: #34495e;
+    padding: 0 8px;
+    font-size: 1.1em;
+}
+
+/* Сетка для полей */
+.form-row {
+    display: flex;
+    gap: 15px; /* Расстояние между колонками */
+    margin-bottom: 15px;
+}
+
+.form-group {
+    flex: 1; /* Растягивает поля равномерно */
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.styled-form input,
+.styled-form select,
+.styled-form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    background: white;
+}
+
+.styled-form input:focus, .styled-form select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+
+/* Кнопки внизу формы */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.btn-submit {
+    background-color: #27ae60;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-submit:hover {
+    background-color: #219150;
+}
+
+.btn-cancel {
+    background-color: #95a5a6;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background-color: #7f8c8d;
+}
+
+/* Исправление лейблов в фильтрах */
+.filter-block label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 0.95em;
+    color: #34495e;
+}

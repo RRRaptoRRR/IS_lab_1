@@ -10,8 +10,6 @@
 
         <link rel="stylesheet" href="resources/css/main.css">
 
-        <link rel="stylesheet" href="resources/css/styles.css">
-
         <meta charset="UTF-8">
 
 </head>
@@ -21,28 +19,29 @@
 
 
 <div class="filter-panel">
-
-    <!-- Блок поиска -->
+    <!-- Левый блок -->
     <div class="filter-block">
-        <p><b>Поиск по ID</b></p>
-        <input id="searchId" oninput="clearOtherFilters('searchId'); filterById();">
+        <label>Поиск по ID</label>
+        <input id="searchId" oninput="clearOtherFilters('searchId'); filterById();" placeholder="Введите ID...">
 
-        <p><b>Поиск по названию группы</b></p>
-        <input id="searchName" oninput="clearOtherFilters('searchName'); filterByName();">
-
+        <label>Поиск по названию</label>
+        <input id="searchName" oninput="clearOtherFilters('searchName'); filterByName();" placeholder="Введите имя...">
     </div>
 
-    <!-- Блок фильтров -->
-    <div class="filter-block" style="text-align:right;">
-        <p><b>Фильтр по дате основания</b></p>
-        <input id="searchDate" type = "date" oninput="clearOtherFilters('searchDate'); filterByDate();">
-        <p>Количество найденных групп: <span id="dateCount">0</span></p>
+    <!-- Правый блок -->
+    <div class="filter-block">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label>Дата основания</label>
+            <span style="font-size: 12px; color: #777;">Найдено: <span id="dateCount">0</span></span>
+        </div>
+        <input id="searchDate" type="date" oninput="clearOtherFilters('searchDate'); filterByDate();">
 
-        <p><b>Фильтр по возрасту фронтмена</b></p>
-        <input id="searchAge" oninput="clearOtherFilters('searchAge'); filterByAge();">
-        <p>Количество найденных групп: <span id="ageCount">0</span></p>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <label>Возраст фронтмена</label>
+            <span style="font-size: 12px; color: #777;">Найдено: <span id="ageCount">0</span></span>
+        </div>
+        <input id="searchAge" type="number" oninput="clearOtherFilters('searchAge'); filterByAge();" placeholder="Макс. возраст...">
     </div>
-
 </div>
 
 
