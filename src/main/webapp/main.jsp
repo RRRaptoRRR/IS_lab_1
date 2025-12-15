@@ -100,59 +100,43 @@
             <th> Название </th>
         </tr>
         </thead>
-        <tbody>
-        <%
-            if(raws!=null){
-                if(!raws.isEmpty()){
-                    for (MusicBand raw:raws){
-        %>
-        <tr>
-            <td><%= raw.getId()%></td>
-            <td><%= raw.getName()%></td>
-            <td><%= raw.getCoordinates().getX()%></td>
-            <td><%= raw.getCoordinates().getY()%></td>
-            <td><%= raw.getCreationDate()%></td>
-            <td><%= raw.getGenre()%></td>
-            <td><%= raw.getNumberOfParticipants()%></td>
-            <td><%= raw.getSinglesCount()%></td>
-            <td><%= raw.getDescription()%></td>
-            <td><%= raw.getBestAlbum().getName()%></td>
-            <td><%= raw.getBestAlbum().getSales()%></td>
-            <td><%= raw.getAlbumsCount()%></td>
-            <td><%= raw.getEstablishmentDate()%></td>
-            <td><%= raw.getFrontMan().getName()%></td>
-            <td><%= raw.getFrontMan().getEyeColor()%></td>
-            <td><%= raw.getFrontMan().getHairColor()%></td>
-            <td><%= raw.getFrontMan().getLocation().getX()%></td>
-            <td><%= raw.getFrontMan().getLocation().getY()%></td>
-            <td><%= raw.getFrontMan().getLocation().getName()%></td>
-            <td><%= raw.getFrontMan().getBirthday()%></td>
-            <td><%= raw.getFrontMan().getHeight()%></td>
-            <td><%= raw.getFrontMan().getNationality()%></td>
-            <td>
-                <!-- Кнопка редактирования -->
-                <form action="editBand" method="get" style="display:inline">
-                    <input type="hidden" name="id" value="<%= raw.getId()%>">
-                    <button type="submit">Редактировать</button>
-                </form>
-
-                <!-- Кнопка удаления -->
-                <form action="deleteBand" method="post" style="display:inline">
-                    <input type="hidden" name="id" value="<%= raw.getId()%>">
-                    <button type="submit">Удалить</button>
-                </form>
-            </td>
-
-        </tr>
-        <%
-                    }
-                }
-            }
-        %>
+        <tbody id="musicTableBody">
+        <!--
+           При первой загрузке страницы сервер сразу вставит сюда данные через include.
+           Это нужно, чтобы пользователь не ждал первую секунду пустую таблицу.
+        -->
+        <jsp:include page="table-rows.jsp"/>
         </tbody>
     </table>
 </div>
 
+<script>
+    // Функция обновления таблицы
+    function refreshTable() {
+        $.ajax({
+            url: 'table-update',
+            type: 'GET',
+            success: function(response) {
+                // 1. Заменяем содержимое таблицы
+                $('#musicTableBody').html(response);
+
+                // 2. ВАЖНО: Заново применяем пагинацию к новым данным!
+                // Мы передаем currentPage, чтобы пользователь остался на той же странице,
+                // на которой был (не сбрасывало на первую)
+                if (typeof showPage === "function") {
+                    showPage(currentPage);
+                }
+            },
+            error: function(error) {
+                console.log("Ошибка обновления: ", error);
+            }
+        });
+    }
+
+
+    // Запускаем обновление каждые 2000 мс (2 секунды)
+    setInterval(refreshTable, 2000);
+</script>
 <div id="pagination" style="margin-top: 15px; text-align: center;"></div>
 <script type="text/javascript" src="resources/js/filters.js"></script>
 <script type="text/javascript" src="resources/js/pagination.js"></script>
