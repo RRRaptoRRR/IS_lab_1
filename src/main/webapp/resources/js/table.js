@@ -3,16 +3,20 @@ function refreshTable() {
         url: 'table-update',
         type: 'GET',
         success: function(response) {
-            // 1. Заменяем содержимое таблицы
             $('#musicTableBody').html(response);
 
-            // 2. ВАЖНО: Заново применяем пагинацию к новым данным!
-            // Мы передаем currentPage, чтобы пользователь остался на той же странице,
-            // на которой был (не сбрасывало на первую)
-            if (typeof showPage === "function") {
+            // Вызываем нашу глобальную функцию
+            if (typeof window.reapplyAllFilters === "function") {
+                window.reapplyAllFilters();
+            } else if (typeof reapplyAllFilters === "function") {
+                reapplyAllFilters();
+            }
+            // Если функции нет, хотя бы пагинацию обновим
+            else if (typeof showPage === "function") {
                 showPage(currentPage);
             }
         },
+
         error: function(error) {
             console.log("Ошибка обновления: ", error);
         }
