@@ -105,6 +105,16 @@
         </tbody>
     </table>
 </div>
+<div style="margin: 10px 0; text-align: center;">
+    <label for="rowsPerPageSelect">Показывать по:</label>
+    <select id="rowsPerPageSelect" onchange="window.currentPage = 1; showPage(1);">
+        <option value="2" selected>2</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="1000000">Все</option>
+    </select>
+</div>
+
 <script type="text/javascript" src="resources/js/pagination.js"></script>
 <script type="text/javascript" src="resources/js/filters.js"></script>
 
