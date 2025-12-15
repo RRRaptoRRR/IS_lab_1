@@ -15,6 +15,7 @@ public class ResultsBean implements Serializable {
         return result;
     }
 
+
     public void setResult(ArrayList<MusicBand> result) {
         this.result = result;
     }

@@ -2,6 +2,7 @@ package Controllers;
 
 import Beans.ResultsBean;
 import Data.*;
+import DataBase.DatabaseHandler;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -123,7 +124,56 @@ public class CreateBandController extends HttpServlet{
         );
 
         // ---------- 4) Добавляем в таблицу и возвращаем на главную ----------
-        resultsBean.addMusicBandToResult(musicBand);
+// ... (ваш код сбора переменных) ...
+
+// ВМЕСТО resultsBean.addMusicBandToResult(musicBand); пишем:
+
+        try (java.sql.Connection connection = DatabaseHandler.getConnection()) {
+            String sql = "INSERT INTO music_bands (name, coord_x, coord_y, genre, number_of_participants, singles_count, description, " +
+                    "best_album_name, best_album_sales, albums_count, establishment_date, " +
+                    "frontman_name, frontman_eye_color, frontman_hair_color, " +
+                    "frontman_loc_x, frontman_loc_y, frontman_loc_name, " +
+                    "frontman_birthday, frontman_height, frontman_nationality) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            java.sql.PreparedStatement statement = connection.prepareStatement(sql);
+
+            // Заполняем параметры
+            statement.setString(1, name);
+            statement.setFloat(2, coordX);
+            statement.setFloat(3, coordY);
+            statement.setString(4, genre != null ? genre.name() : null);
+            statement.setInt(5, numberOfParticipants);
+            statement.setLong(6, singlesCount);
+            statement.setString(7, description);
+
+            // Альбом (проверка на null)
+            statement.setString(8, albumName != null && !albumName.isEmpty() ? albumName : null);
+            if (albumSales != null) statement.setDouble(9, albumSales); else statement.setNull(9, java.sql.Types.DOUBLE);
+
+            statement.setLong(10, albumsCount);
+            statement.setObject(11, establishmentDate); // LocalDate SQL умеет конвертировать
+
+            // FrontMan
+            statement.setString(12, frontManName);
+            statement.setString(13, eyeColor.name());
+            statement.setString(14, hairColor.name());
+            statement.setLong(15, locX);
+            statement.setDouble(16, locY);
+            statement.setString(17, locName);
+            statement.setObject(18, birthday);
+            if (height != null) statement.setFloat(19, height); else statement.setNull(19, java.sql.Types.FLOAT);
+            statement.setString(20, nationality != null ? nationality.name() : null);
+
+            statement.executeUpdate();
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+            // Можно добавить вывод ошибки пользователю
+            throw new ServletException("Ошибка БД", e);
+        }
+
+// Перенаправление остаётся тем же
         response.sendRedirect(request.getContextPath() + "/controller");
     }
 
