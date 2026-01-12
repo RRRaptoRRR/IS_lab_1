@@ -43,7 +43,7 @@ public class CreateBandController extends HttpServlet{
             session.setAttribute("table", resultsBean);
         }
 
-        // ---------- 1) Читаем данные формы в переменные ----------
+        // Читаем данные формы в переменные
         String name = request.getParameter("name");
 
         String coordXStr = request.getParameter("coordX");
@@ -77,7 +77,7 @@ public class CreateBandController extends HttpServlet{
         Country nationality = (nationalityStr == null || nationalityStr.isEmpty()) ? null : Country.valueOf(nationalityStr);
 
 
-        // ---------- 2) Преобразуем строки в нужные типы ----------
+        //Преобразуем строки в нужные типы
         float coordX = Float.parseFloat(coordXStr);
         float coordY = Float.parseFloat(coordYStr);
 
@@ -99,7 +99,7 @@ public class CreateBandController extends HttpServlet{
         Float height = (heightStr == null || heightStr.isEmpty()) ? null : Float.parseFloat(heightStr);
 
 
-        // ---------- 3) Собираем объект MusicBand из переменных ----------
+        // Собираем объект MusicBand
         MusicBand musicBand = new MusicBand(
                 (long) resultsBean.getResult().size(),
                 name,
@@ -123,11 +123,7 @@ public class CreateBandController extends HttpServlet{
                 )
         );
 
-        // ---------- 4) Добавляем в таблицу и возвращаем на главную ----------
-// ... (ваш код сбора переменных) ...
-
-// ВМЕСТО resultsBean.addMusicBandToResult(musicBand); пишем:
-
+        //Добавляем в таблицу и возвращаем на главную
         try (java.sql.Connection connection = DatabaseHandler.getConnection()) {
             String sql = "INSERT INTO music_bands (name, coord_x, coord_y, genre, number_of_participants, singles_count, description, " +
                     "best_album_name, best_album_sales, albums_count, establishment_date, " +
@@ -169,7 +165,6 @@ public class CreateBandController extends HttpServlet{
 
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
-            // Можно добавить вывод ошибки пользователю
             throw new ServletException("Ошибка БД", e);
         }
 

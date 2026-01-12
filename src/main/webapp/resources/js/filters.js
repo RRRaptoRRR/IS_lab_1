@@ -1,5 +1,3 @@
-/* === filters.js === */
-
 function clearOtherFilters(activeId) {
     let ids = ["searchId", "searchName", "searchDate", "searchAge"];
     ids.forEach(id => {
@@ -19,11 +17,10 @@ function calculateAge(birthDate) {
     return age;
 }
 
-/**
- * Обновляет интерфейс после изменения фильтров.
- * keepPage = true: пытаемся остаться на текущей странице (для автообновления).
- * keepPage = false: сбрасываем на 1 страницу (для нового поиска).
- */
+ //Обновляет интерфейс после изменения фильтров
+ //keepPage = true: пытаемся остаться на текущей странице (для автообновления)
+ //keepPage = false: сбрасываем на 1 страницу (для нового поиска)
+ //
 function updateUI(keepPage) {
     if (typeof showPage === "function") {
         if (keepPage) {
@@ -37,8 +34,8 @@ function updateUI(keepPage) {
     }
 }
 
-/* --- Функции фильтрации --- */
-/* Они ТОЛЬКО ставят класс filtered-out. Они НЕ меняют display: none. */
+//Функции фильтрации
+// Они только ставят класс filtered-out. Они не меняют display: none
 
 function filterById(keepPage = false) {
     clearOtherFilters("searchId");
@@ -102,7 +99,7 @@ function filterByAge(keepPage = false) {
     let count = 0;
 
     document.querySelectorAll("table tbody tr").forEach(row => {
-        let cell = row.querySelector("td:nth-child(20)"); // Проверьте индекс столбца!
+        let cell = row.querySelector("td:nth-child(20)"); //
         let visible = true;
 
         if (cell && val) {
@@ -123,7 +120,7 @@ function filterByAge(keepPage = false) {
     updateUI(keepPage);
 }
 
-/* === ГЛАВНАЯ ФУНКЦИЯ ВОССТАНОВЛЕНИЯ === */
+// функция восстановления //
 window.reapplyAllFilters = function() {
     let foundActiveFilter = false;
 

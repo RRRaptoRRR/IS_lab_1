@@ -15,9 +15,7 @@ import java.time.LocalDate;
 @WebServlet("/editBand")
 public class EditBandController extends HttpServlet {
 
-    /**
-     * GET: Загружает данные группы из БД и открывает form.jsp в режиме редактирования.
-     */
+    //Загружает данные группы из БД и открывает form.jsp в режиме редактирования
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String idStr = request.getParameter("id");
@@ -33,8 +31,7 @@ public class EditBandController extends HttpServlet {
             MusicBand band = getBandById(id);
 
             if (band != null) {
-                // Передаем объект "band" на JSP.
-                // form.jsp увидит, что band != null, и включит режим редактирования.
+                // if band != null -> форма будет заполнена данными band
                 request.setAttribute("band", band);
                 request.getRequestDispatcher("/form.jsp").forward(request, response);
             } else {
@@ -46,9 +43,7 @@ public class EditBandController extends HttpServlet {
         }
     }
 
-    /**
-     * POST: Принимает измененные данные из формы и выполняет UPDATE в БД.
-     */
+    //Принимает измененные данные из формы и выполняет UPDATE в БД.
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -102,7 +97,7 @@ public class EditBandController extends HttpServlet {
         double locY = Double.parseDouble(request.getParameter("locY"));
         String locName = request.getParameter("locName");
 
-        // --- SQL UPDATE ---
+        // SQL UPDATE
         String sql = "UPDATE music_bands SET " +
                 "name=?, coord_x=?, coord_y=?, genre=?, number_of_participants=?, singles_count=?, description=?, " +
                 "best_album_name=?, best_album_sales=?, albums_count=?, establishment_date=?, " +
@@ -166,7 +161,7 @@ public class EditBandController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/controller");
     }
 
-    // Вспомогательный метод для чтения из БД (чтобы не загромождать doGet)
+    // Вспомогательный метод для чтения из БД
     private MusicBand getBandById(long id) {
         String sql = "SELECT * FROM music_bands WHERE id = ?";
         try (Connection connection = DatabaseHandler.getConnection();

@@ -1,22 +1,18 @@
-/* === pagination.js === */
 
 // Глобальные переменные
 window.currentPage = 1;
 
-/**
- * Получает количество строк на страницу из селекта (если он есть) или возвращает 2.
- */
+//Получает количество строк на страницу из селекта (если он есть) или возвращает 2
 function getRowsPerPage() {
     let select = document.getElementById("rowsPerPageSelect");
     return select ? parseInt(select.value) : 2;
 }
 
-/**
- * Основная функция отображения.
- * 1. Скрывает всё.
- * 2. Выбирает только то, что не отфильтровано.
- * 3. Показывает нужную страницу.
- */
+//
+//Основная функция отображения
+//1. Скрывает всё
+//2. Выбирает только то, что не отфильтровано
+//3. Показывает нужную страницу
 function showPage(page) {
     let tbody = document.getElementById("musicTableBody");
     if (!tbody) return;
@@ -24,24 +20,24 @@ function showPage(page) {
     let rowsPerPage = getRowsPerPage();
     let allRows = tbody.querySelectorAll("tr");
 
-    // 1. Сначала скрываем ВСЕ строки таблицы
+    // Сначала скрываем ВСЕ строки таблицы
     // Это сбрасывает любое предыдущее состояние отображения
     allRows.forEach(r => r.style.display = "none");
 
-    // 2. Находим строки, которые прошли фильтр (у которых нет класса filtered-out)
+    //  Находим строки, которые прошли фильтр (у которых нет класса filtered-out)
     let visibleRows = Array.from(allRows).filter(r => !r.classList.contains("filtered-out"));
 
-    // 3. Считаем количество страниц
+    //  Считаем количество страниц
     let totalPages = Math.max(1, Math.ceil(visibleRows.length / rowsPerPage));
 
-    // 4. Проверяем границы страницы
+    //  Проверяем границы страницы
     if (page > totalPages) page = totalPages;
     if (page < 1) page = 1;
 
     // Обновляем глобальную переменную
     window.currentPage = page;
 
-    // 5. Показываем только строки для текущей страницы
+    // Показываем только строки для текущей страницы
     let start = (window.currentPage - 1) * rowsPerPage;
     let end = start + rowsPerPage;
 
@@ -51,16 +47,14 @@ function showPage(page) {
         }
     });
 
-    // 6. Обновляем кнопки пагинации
+    //  Обновляем кнопки пагинации
     updatePagination(totalPages);
 
     // Обновляем счетчик страниц (если есть такой элемент для отладки или инфо)
     // console.log(`Showing page ${window.currentPage} of ${totalPages}`);
 }
 
-/**
- * Рисует кнопки пагинации
- */
+// Рисует кнопки пагинации
 function updatePagination(totalPages) {
     const container = document.getElementById("pagination");
     if (!container) return;

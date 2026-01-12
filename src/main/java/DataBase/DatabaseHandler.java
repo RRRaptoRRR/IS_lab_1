@@ -5,10 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseHandler {
-    // Укажите здесь ваши данные (пароль, который вы меняли в pgAdmin)
-    private static final String URL = "jdbc:postgresql://localhost:5432/postgres"; // или имя вашей новой БД
+    private static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     private static final String USER = "postgres";
-    private static final String PASS = "postgres";
+    private static final String PASS = "sanek2307";
 
     static {
         try {

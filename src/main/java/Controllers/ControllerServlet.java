@@ -25,11 +25,8 @@ public class ControllerServlet extends HttpServlet {
         ResultsBean tempBean = new ResultsBean();
         ArrayList<MusicBand> bands = tempBean.getResult();
 
-        // 2. Кладем СПИСОК в request (для table-rows.jsp, который внутри main.jsp)
+        // Кладем arraylist в request (для таблицы)
         request.setAttribute("bandsList", bands);
-
-        // 3. Открываем главную страницу
-        // main.jsp включит в себя table-rows.jsp, который найдет "bandsList" и отрисует его.
         getServletContext().getRequestDispatcher("/main.jsp").forward(request, response);
     }
 }

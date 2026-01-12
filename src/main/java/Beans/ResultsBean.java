@@ -10,16 +10,13 @@ import java.util.ArrayList;
 
 public class ResultsBean implements Serializable {
 
-    // Это поле теперь временное, оно перезаполняется при каждом вызове getResult()
+    //перезаполняется при каждом вызове getResult()
     private ArrayList<MusicBand> result;
 
     public ResultsBean() {
         this.result = new ArrayList<>();
     }
 
-    /**
-     * Основной метод: идет в БД, делает SELECT и возвращает заполненный ArrayList.
-     */
     public ArrayList<MusicBand> getResult() {
         // Очищаем старый список перед новой загрузкой
         this.result = new ArrayList<>();
@@ -32,13 +29,13 @@ public class ResultsBean implements Serializable {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                // 1. Извлекаем координаты
+                // Извлекаем координаты
                 Coordinates coordinates = new Coordinates(
                         rs.getFloat("coord_x"),
                         rs.getFloat("coord_y")
                 );
 
-                // 2. Извлекаем альбом (может быть null)
+                // Извлекаем альбом (может быть null)
                 Album bestAlbum = null;
                 String albumName = rs.getString("best_album_name");
                 if (albumName != null) {
@@ -48,19 +45,16 @@ public class ResultsBean implements Serializable {
                     );
                 }
 
-                // 3. Извлекаем локацию фронтмена
+                // Извлекаем локацию фронтмена
                 Location location = new Location(
                         rs.getLong("frontman_loc_x"),
                         rs.getDouble("frontman_loc_y"),
                         rs.getString("frontman_loc_name")
                 );
 
-                // 4. Извлекаем данные фронтмена
-                // Безопасное чтение Enum (если в базе NULL или мусор, надо обрабатывать, но пока считаем что там всё ок)
+                // Безопасное чтение Country, Height (может быть null)
                 String nationalityStr = rs.getString("frontman_nationality");
                 Country nationality = (nationalityStr != null) ? Country.valueOf(nationalityStr) : null;
-
-                // Безопасное чтение высоты (может быть null в базе)
                 Float height = rs.getObject("frontman_height", Float.class);
 
                 Person frontMan = new Person(
@@ -73,11 +67,11 @@ public class ResultsBean implements Serializable {
                         nationality
                 );
 
-                // 5. Извлекаем жанр (может быть null)
+                // Извлекаем жанр (может быть null)
                 String genreStr = rs.getString("genre");
                 MusicGenre genre = (genreStr != null) ? MusicGenre.valueOf(genreStr) : null;
 
-                // 6. Собираем основной объект MusicBand
+                // Собираем основной объект MusicBand
                 MusicBand band = new MusicBand(
                         rs.getLong("id"),
                         rs.getString("name"),
@@ -99,7 +93,6 @@ public class ResultsBean implements Serializable {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // В реальном приложении можно бросить RuntimeException, чтобы увидеть ошибку на странице
         }
 
         return result;
@@ -109,15 +102,7 @@ public class ResultsBean implements Serializable {
         this.result = result;
     }
 
-    /**
-     * Этот метод можно оставить для обратной совместимости,
-     * но по факту добавление теперь должно идти через INSERT в базу,
-     * а не через этот метод.
-     */
     public void addMusicBandToResult(MusicBand musicBand) {
-        // Если вы хотите, чтобы этот метод тоже писал в базу,
-        // сюда нужно перенести код INSERT из контроллера.
-        // Но сейчас логичнее оставить его пустым или кидать ошибку,
-        // так как добавление у вас происходит в CreateBandController.
+
     }
 }

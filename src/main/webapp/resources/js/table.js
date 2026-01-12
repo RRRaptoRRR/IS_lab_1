@@ -1,14 +1,13 @@
-/* === table.js === */
 
 function refreshTable() {
     $.ajax({
         url: 'table-update',
         type: 'GET',
         success: function(response) {
-            // 1. Вставляем новый HTML
+            // Вставляем новый HTML
             $('#musicTableBody').html(response);
 
-            // 2. Восстанавливаем фильтры и пагинацию
+            // Восстанавливаем фильтры и пагинацию
             // Функция reapplyAllFilters сама решит, какую страницу показать
             if (typeof window.reapplyAllFilters === "function") {
                 window.reapplyAllFilters();
