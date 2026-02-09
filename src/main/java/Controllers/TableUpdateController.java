@@ -1,7 +1,7 @@
 package Controllers;
 
 import Beans.ResultsBean;
-import Data.MusicBand;
+import Data.MusicBand.MusicBand;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

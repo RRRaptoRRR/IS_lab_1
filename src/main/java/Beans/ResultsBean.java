@@ -1,6 +1,8 @@
 package Beans;
 
-import Data.*;
+import Data.MusicBand.MusicBand;
+import Data.MusicBand.MusicGenre;
+import Data.MusicBand.Person;
 import DataBase.DatabaseHandler;
 
 import java.io.Serializable;

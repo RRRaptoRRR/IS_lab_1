@@ -2,7 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Beans.ResultsBean" %>
-<%@ page import="Data.MusicBand" %>
+<%@ page import="Data.MusicBand.MusicBand" %>
 
 <html>
     <head>

@@ -1,4 +1,4 @@
-package Data;
+package Data.MusicBand;
 
 public class Person {
     private String name; //Поле не может быть null, Строка не может быть пустой

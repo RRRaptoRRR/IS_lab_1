@@ -1,7 +1,9 @@
 package Controllers;
 
 import Beans.ResultsBean;
-import Data.*;
+import Data.MusicBand.MusicBand;
+import Data.MusicBand.MusicGenre;
+import Data.MusicBand.Person;
 import DataBase.DatabaseHandler;
 
 import javax.servlet.ServletException;
